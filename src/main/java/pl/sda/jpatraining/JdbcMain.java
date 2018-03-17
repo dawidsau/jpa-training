@@ -26,10 +26,12 @@ public class JdbcMain {
 
 //            List<String> people = new ArrayList<>();
             while (resultSet.next()){
-                resultSet.getInt("employee_id");
-                resultSet.getString("employee_name");
-                resultSet.getFloat("salary");
+                int employee_id = resultSet.getInt("employee_id");
+                String employee_name = resultSet.getString("employee_name");
+                float salary = resultSet.getFloat("salary");
+                System.out.println(
 
+                );
             }
 
 
