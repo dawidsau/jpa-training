@@ -1,6 +1,10 @@
 package pl.sda.jpatraining;
 
 import com.google.common.collect.Lists;
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.errorprone.annotations.NoAllocation;
+import jdk.nashorn.internal.objects.annotations.Getter;
+import jdk.nashorn.internal.objects.annotations.Setter;
 
 import java.sql.*;
 import java.util.List;
@@ -92,15 +96,18 @@ public class JdbcMain {
 
     private static void printOutEmployees(ResultSet resultSet) throws SQLException {
         while (resultSet.next()) {
-            int employee_id = resultSet.getInt("employee_id");
-            String employee_name = resultSet.getString("employee_name");
-            float salary = resultSet.getFloat("salary");
-            Date hiredate = resultSet.getDate("hiredate");
-            System.out.println(
-                    Stream.of(employee_id, employee_name, salary, hiredate)
-                            .map(e -> e.toString()).collect(Collectors.joining(", ")));
+            System.out.println(EmployeeDto.builder().employee_id(resultSet.getInt("employee_id"))
+                    .employee_name(resultSet.getString("employee_name"))
+                    .salary(resultSet.getFloat("salary"))
+                    .hiredate(resultSet.getDate("hiredate")).build().toString());
+
+//            System.out.println(
+//                    Stream.of(employee_id, employee_name, salary, hiredate)
+//                            .map(e -> e.toString()).collect(Collectors.joining(", ")));
         }
     }
+
+
 
 
     private static Connection getConnection() {
@@ -115,3 +122,4 @@ public class JdbcMain {
     }
 
 }
+
