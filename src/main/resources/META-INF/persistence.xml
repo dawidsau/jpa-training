@@ -1,0 +1,28 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="sdajpa" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <class>pl.sda.jpatraining.jpa.Customer</class>
+        <!--<class>pl.sda.jpatraining.jpa.order.Order</class>-->
+        <!--<class>pl.sda.jpatraining.jpa.order.OrderLine</class>-->
+        <!--<class>pl.sda.jpatraining.jpa.order.OrderStatus</class>-->
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL57Dialect"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
+
+            <property name="hibernate.connection.url"
+                      value="jdbc:mysql://localhost:3306/sdajpa?serverTimezone=UTC&amp;useSSL=false"/>
+            <property name="hibernate.connection.username" value="user"/>
+            <property name="hibernate.connection.password" value="password"/>
+            <property name="connection.autocommit" value="true"/>
+            <!--<property name="hibernate.hbm2ddl.import_files">orders.sql</property>-->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>  <!--!!!-->
+            <!--<property name="javax.persistence.schema-generation.database.action" value="create"/>-->
+        </properties>
+    </persistence-unit>
+</persistence>
