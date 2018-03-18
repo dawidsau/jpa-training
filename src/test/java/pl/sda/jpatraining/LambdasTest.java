@@ -3,6 +3,7 @@ package pl.sda.jpatraining;
 import com.google.common.collect.Lists;
 import org.junit.Ignore;
 import org.junit.Test;
+import pl.sda.jpatraining.jpa.Customer;
 
 import java.util.*;
 import java.util.function.BiFunction;
@@ -153,5 +154,9 @@ public class LambdasTest {
         stateOwner.changeState("kolejny nowy stan");
     }
 
-
+    @Test
+    public void name() {
+        Customer customer = new Customer();
+        System.out.println();
+    }
 }

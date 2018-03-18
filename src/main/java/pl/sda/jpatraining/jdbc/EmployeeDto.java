@@ -1,4 +1,4 @@
-package pl.sda.jpatraining;
+package pl.sda.jpatraining.jdbc;
 
 
 import lombok.*;
@@ -14,6 +14,6 @@ import java.sql.Date;
 public class EmployeeDto {
     int employee_id;
     String employee_name;
-    float salary;
+    String salary;
     Date hiredate;
 }

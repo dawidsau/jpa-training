@@ -1,15 +1,6 @@
-package pl.sda.jpatraining;
-
-import com.google.common.collect.Lists;
-import com.google.common.eventbus.AllowConcurrentEvents;
-import com.google.errorprone.annotations.NoAllocation;
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
+package pl.sda.jpatraining.jdbc;
 
 import java.sql.*;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class JdbcMain {
 
@@ -70,7 +61,7 @@ public class JdbcMain {
                     "  salary,\n" +
                     "  hiredate\n" +
                     "FROM sdajdbc.employee\n" +
-                    "WHERE salary > " + minSalary + "  ";
+                    "WHERE salary  " ;
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             printOutEmployees(resultSet);
@@ -98,7 +89,7 @@ public class JdbcMain {
         while (resultSet.next()) {
             System.out.println(EmployeeDto.builder().employee_id(resultSet.getInt("employee_id"))
                     .employee_name(resultSet.getString("employee_name"))
-                    .salary(resultSet.getFloat("salary"))
+                    .salary(""+getSalary(resultSet))
                     .hiredate(resultSet.getDate("hiredate")).build().toString());
 
 //            System.out.println(
@@ -107,7 +98,13 @@ public class JdbcMain {
         }
     }
 
-
+    private static Float getSalary(ResultSet resultSet) throws SQLException {
+        float salary = resultSet.getFloat("salary");
+        if (resultSet.wasNull()) {
+            return null;
+        }
+        return salary;
+    }
 
 
     private static Connection getConnection() {
