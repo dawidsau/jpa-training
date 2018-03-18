@@ -1,12 +1,27 @@
 package pl.sda.jpatraining.jpa;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity(name = "Orders")
 public class Order {
 
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
+    private Integer orderId;
+
+    @Enumerated(EnumType.ORDINAL)
+    private OrderStatus orderStatus;
+
+    @Column(name = "total_cost")
+    private BigDecimal totalCost;
+
+    @ManyToOne
+    private Customer customer;
+
+
+
+
 }
 

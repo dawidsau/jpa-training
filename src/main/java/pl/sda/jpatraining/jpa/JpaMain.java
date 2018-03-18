@@ -15,19 +15,14 @@ public class JpaMain {
                 ENTITY_MANAGER_FACTORY.createEntityManager();
 
 
-        Query query = entityManager.createQuery(
-                "select c from Customer c " +
-                        "where c.firstName = :firstName and c.surname = :surname",Customer.class);
-        query.setParameter("firstName", "Andrzej");
-        query.setParameter("surname", "Nowak");
+        findCustomerExample(entityManager);
+        createCustomer();
+//        createOrderAndLinkTo
+        
+    }
 
-        List<Customer> resultList = query.getResultList();
-
-        QCustomer qcustomer = QCustomer.customer; //ciekawostka
-        Customer andrzej = new JPAQuery<>(entityManager).select(qcustomer).from(qcustomer)
-                .where(qcustomer.firstName.eq("Andrzej")).fetchFirst();
-
-
+    private static void createCustomer() {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
@@ -42,11 +37,19 @@ public class JpaMain {
         entityManager.persist(customer);
 
         transaction.commit();
+    }
 
+    private static void findCustomerExample(EntityManager entityManager) {
+        Query query = entityManager.createQuery(
+                "select c from Customer c " +
+                        "where c.firstName = :firstName and c.surname = :surname",Customer.class);
+        query.setParameter("firstName", "Andrzej");
+        query.setParameter("surname", "Nowak");
 
+        List<Customer> resultList = query.getResultList();
 
-
-
-
+        QCustomer qcustomer = QCustomer.customer; //ciekawostka
+        Customer andrzej = new JPAQuery<>(entityManager).select(qcustomer).from(qcustomer)
+                .where(qcustomer.firstName.eq("Andrzej")).fetchFirst();
     }
 }

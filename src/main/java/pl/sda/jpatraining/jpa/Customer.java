@@ -23,6 +23,7 @@ public class Customer {
 
     private Address address;
 
+    @OneToMany(mappedBy = "customer")
     private List<Order> orderList;
 
 }
