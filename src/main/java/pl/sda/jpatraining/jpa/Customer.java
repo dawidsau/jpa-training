@@ -3,6 +3,7 @@ package pl.sda.jpatraining.jpa;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,4 +22,7 @@ public class Customer {
     private String surname;
 
     private Address address;
+
+    private List<Order> orderList;
+
 }

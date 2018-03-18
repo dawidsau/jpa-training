@@ -1,9 +1,9 @@
 package pl.sda.jpatraining.jpa;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import com.querydsl.jpa.impl.JPAQuery;
+
+import javax.persistence.*;
+import java.util.List;
 
 public class JpaMain {
     public static final EntityManagerFactory ENTITY_MANAGER_FACTORY =
@@ -13,6 +13,21 @@ public class JpaMain {
 
         EntityManager entityManager =
                 ENTITY_MANAGER_FACTORY.createEntityManager();
+
+
+        Query query = entityManager.createQuery(
+                "select c from Customer c " +
+                        "where c.firstName = :firstName and c.surname = :surname",Customer.class);
+        query.setParameter("firstName", "Andrzej");
+        query.setParameter("surname", "Nowak");
+
+        List<Customer> resultList = query.getResultList();
+
+        QCustomer qcustomer = QCustomer.customer; //ciekawostka
+        Customer andrzej = new JPAQuery<>(entityManager).select(qcustomer).from(qcustomer)
+                .where(qcustomer.firstName.eq("Andrzej")).fetchFirst();
+
+
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
@@ -27,6 +42,9 @@ public class JpaMain {
         entityManager.persist(customer);
 
         transaction.commit();
+
+
+
 
 
 
