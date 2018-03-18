@@ -16,7 +16,7 @@ public class Order {
     @Column(name = "order_id")
     private Integer orderId;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
     @Column(name = "total_cost")

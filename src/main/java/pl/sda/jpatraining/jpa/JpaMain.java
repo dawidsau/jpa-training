@@ -1,5 +1,6 @@
 package pl.sda.jpatraining.jpa;
 
+import com.google.common.collect.Lists;
 import com.querydsl.jpa.impl.JPAQuery;
 
 import javax.persistence.*;
@@ -18,11 +19,25 @@ public class JpaMain {
         findCustomerExample(entityManager);
         createCustomer();
         createOrder();
+        createCustomerAndOrder();
 
         System.exit(0);
     }
 
-    private static void createOrder() {
+    private static void createCustomerAndOrder() {
+        Customer customer = createCustomer();
+        Order order = createOrder();
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        customer.setOrderList(Lists.newArrayList(order));
+        order.setCustomer(customer);
+        entityManager.merge(order);
+        transaction.commit();
+
+    }
+
+    private static Order createOrder() {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
@@ -31,10 +46,10 @@ public class JpaMain {
         order.setTotalCost(BigDecimal.valueOf(100));
         entityManager.persist(order);
         transaction.commit();
-
+        return order;
     }
 
-    private static void createCustomer() {
+    private static Customer createCustomer() {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
@@ -50,12 +65,13 @@ public class JpaMain {
         entityManager.persist(customer);
         System.out.println();
         transaction.commit();
+        return customer;
     }
 
     private static void findCustomerExample(EntityManager entityManager) {
         Query query = entityManager.createQuery(
                 "select c from Customer c " +
-                        "where c.firstName = :firstName and c.surname = :surname",Customer.class);
+                        "where c.firstName = :firstName and c.surname = :surname", Customer.class);
         query.setParameter("firstName", "Andrzej");
         query.setParameter("surname", "Nowak");
 
