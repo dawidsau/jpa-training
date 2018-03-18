@@ -19,12 +19,16 @@ public class JpaMain {
         Customer customer = new Customer();
         customer.setFirstName("Andrzej");
         customer.setSurname("Nowak");
-        customer.setCity("Warszawa");
-        customer.setPostalCode("92-001");
-        customer.setStreet("Kopcińskiego");
+        Address address = new Address();//
+        address.setCity("Warszawa");
+        address.setPostalCode("92-001");
+        address.setStreet("Kopcińskiego");
+        customer.setAddress(address);
         entityManager.persist(customer);
 
         transaction.commit();
+
+
 
     }
 }

@@ -17,10 +17,8 @@ public class Customer {
 
     @Column(name = "first_name")
     private String firstName;
-    private String surname;
-    private String city;
-    @Column(name = "postal_code")
-    private String postalCode;
-    private String street;
 
+    private String surname;
+
+    private Address address;
 }
