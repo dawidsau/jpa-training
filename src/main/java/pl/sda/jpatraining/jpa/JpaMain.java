@@ -20,8 +20,17 @@ public class JpaMain {
         createCustomer();
         createOrder();
         createCustomerAndOrder();
-
+        findCustomersWithOrders();
         System.exit(0);
+    }
+
+    private static void findCustomersWithOrders() {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT c from Customer c join Orders  o on  o.customer.id = c.id",Customer.class);
+        List<Customer> resultList = query.getResultList();
+        System.out.println(resultList);
+
     }
 
     private static void createCustomerAndOrder() {

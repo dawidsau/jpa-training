@@ -25,8 +25,5 @@ public class Order {
     @ManyToOne
     private Customer customer;
 
-
-
-
 }
 
